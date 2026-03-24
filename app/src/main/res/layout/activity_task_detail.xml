@@ -107,9 +107,19 @@
             android:id="@+id/btnDeleteTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:backgroundTint="#D32F2F"
             android:padding="14dp"
             android:text="Delete Task"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnShareTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#757575"
+            android:padding="14dp"
+            android:text="Share Task"
             android:textColor="@color/white" />
 
     </LinearLayout>

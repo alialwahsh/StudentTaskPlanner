@@ -17,7 +17,7 @@ public class TaskDetailActivity extends AppCompatActivity {
 
     private TextView tvDetailTitle, tvDetailDescription, tvDetailDueDate,
             tvDetailPriority, tvDetailCategory, tvDetailStatus;
-    private Button btnEdit, btnDelete, btnToggleStatus;
+    private Button btnEdit, btnDelete, btnToggleStatus, btnShareTask;
     private DatabaseHelper dbHelper;
     private int taskId;
     private Task currentTask;
@@ -44,6 +44,9 @@ public class TaskDetailActivity extends AppCompatActivity {
         btnEdit = findViewById(R.id.btnEditTask);
         btnDelete = findViewById(R.id.btnDeleteTask);
         btnToggleStatus = findViewById(R.id.btnToggleStatus);
+        btnShareTask = findViewById(R.id.btnShareTask);
+
+        btnShareTask.setOnClickListener(v -> shareTask());
 
         btnEdit.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddTaskActivity.class);
@@ -112,6 +115,27 @@ public class TaskDetailActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
+    }
+
+    // Implicit intent to share task details via other apps
+    private void shareTask() {
+        if (currentTask != null) {
+            String taskInfo = "Task: " + currentTask.getTitle()
+                    + "\nDue: " + currentTask.getDueDate()
+                    + "\nPriority: " + currentTask.getPriority()
+                    + "\nCategory: " + currentTask.getCategory()
+                    + "\nStatus: " + (currentTask.isCompleted() ? "Completed" : "Pending");
+
+            if (currentTask.getDescription() != null && !currentTask.getDescription().isEmpty()) {
+                taskInfo += "\nDetails: " + currentTask.getDescription();
+            }
+
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Task: " + currentTask.getTitle());
+            shareIntent.putExtra(Intent.EXTRA_TEXT, taskInfo);
+            startActivity(Intent.createChooser(shareIntent, "Share task via"));
+        }
     }
 
     @Override
