@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.taskplanner.studenttaskplanner.R;
 import com.taskplanner.studenttaskplanner.database.DatabaseHelper;
+import com.taskplanner.studenttaskplanner.fragments.AboutFragment;
 import com.taskplanner.studenttaskplanner.models.User;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -46,6 +47,13 @@ public class ProfileActivity extends AppCompatActivity {
         loadStats();
 
         btnUpdateProfile.setOnClickListener(v -> updateProfile());
+
+        // Load the About fragment
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer, new AboutFragment())
+                    .commit();
+        }
     }
 
     private void loadProfile() {
