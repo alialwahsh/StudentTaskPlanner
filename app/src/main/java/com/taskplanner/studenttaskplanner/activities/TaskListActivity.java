@@ -21,6 +21,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.taskplanner.studenttaskplanner.R;
 import com.taskplanner.studenttaskplanner.adapters.TaskAdapter;
@@ -55,6 +56,13 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
         Log.d(TAG, "onCreate called");
+
+        // Set up toolbar so the options menu shows
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("My Tasks");
+        }
 
         SharedPreferences prefs = getSharedPreferences("UserSession", MODE_PRIVATE);
         currentUserId = prefs.getInt("userId", -1);
